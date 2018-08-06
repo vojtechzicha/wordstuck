@@ -54,18 +54,20 @@ console.log('2) Morgan Configuration - DONE')
 
 console.log('3. MongoDB Configuration')
 
-MongoClient.connect(process.env.MONGO_URI, (err, conn) => {
-  console.log(process.env.MONGO_URI)
-  if (err) {
-    console.error('No connection to the database')
-    throw err
+MongoClient.connect(
+  process.env.MONGO_URI,
+  (err, conn) => {
+    if (err) {
+      console.error('No connection to the database ' + process.env.MONGO_URI)
+      throw err
+    }
+    app.locals.db = conn.db(process.env.MONGO_DATABASE)
+
+    console.log('3) MongoDB Configuration - DONE')
+    console.log('4. Listening')
+
+    app.listen(process.env.PORT || 3030)
   }
-  app.locals.db = conn.db(process.env.MONGO_DATABASE)
-
-  console.log('3) MongoDB Configuration - DONE')
-  console.log('4. Listening')
-
-  app.listen(process.env.PORT || 3030)
-})
+)
 
 app.use('/api/assets/v1/', assets)
