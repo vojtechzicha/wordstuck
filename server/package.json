@@ -1,0 +1,43 @@
+{
+  "name": "budget-helpers-server",
+  "version": "1.0.0",
+  "description": "API for budget-helpers repo",
+  "main": "index.js",
+  "repository": "https://gihtub.com/vojtechzicha/budget-helpers.git",
+  "author": "Vojtěch Zicha",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "express-fileupload": "^0.4.0",
+    "express-jwt": "^5.3.0",
+    "express-jwt-authz": "^1.0.0",
+    "jwks-rsa": "^1.2.1",
+    "moment": "^2.21.0",
+    "mongodb": "^3.0.3",
+    "morgan": "^1.9.0",
+    "onedrive-api": "^0.1.4",
+    "streamifier": "^0.1.1",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-inline-dotenv": "^1.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "nodemon": "^1.15.1",
+    "rimraf": "^2.6.2"
+  },
+  "engines": {
+    "node": "^9.10.1",
+    "yarn": "^1.5.1"
+  },
+  "scripts": {
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./yarn-debug.log,./yarn-error.log,./access.log,./package.json,./yarn.lock --copy-files",
+    "start": "node dist/index.js",
+    "postinstall": "yarn build",
+    "dev:start:script": "babel-node -- ./index.js",
+    "dev:start": "nodemon --exec yarn dev:start:script"
+  }
+}
