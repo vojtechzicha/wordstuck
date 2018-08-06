@@ -44,9 +44,12 @@ class App extends Component {
   }
 
   refreshCombo = async () => {
-    const res = await this.fetch('items').then(res => res.json())
-    this.setState({ combo: res, item: null })
-    window.location.hash = ''
+    return this.fetch('items')
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ combo: res, item: null })
+        window.location.hash = ''
+      })
   }
 
   fetch = (action, options = {}, headers = {}) => {
@@ -70,6 +73,25 @@ class App extends Component {
     })
   }
 
+  handleNewItem = async () => {
+    const newInfo = await this.fetch(
+      'items',
+      { method: 'PUT' },
+      {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    ).then(res => res.json())
+
+    await this.refreshCombo()
+
+    this.setState({
+      item: await this.fetch(`items/${newInfo.id}`).then(res => res.json())
+    })
+
+    window.location.hash = 'features'
+  }
+
   render() {
     const { item, combo } = this.state
 
@@ -85,6 +107,7 @@ class App extends Component {
                   <HeaderScreen
                     fetch={this.fetch}
                     onSelectItem={this.handleSelectItem}
+                    onNewItem={this.handleNewItem}
                     itemId={item}
                     combo={combo}
                     onLogout={() => auth.logout()}

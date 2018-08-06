@@ -55,7 +55,7 @@ const TemplateNavigation = ({ onLogout, item }) => (
   </nav>
 )
 
-const TemplateHeader = ({ combo, onSelectItem, itemId, onLogout }) => (
+const TemplateHeader = ({ combo, onSelectItem, itemId, onLogout, onNewItem }) => (
   <Fragment>
     <TemplateNavigation onLogout={onLogout} item={itemId} />
     <header className="masthead">
@@ -80,7 +80,10 @@ const TemplateHeader = ({ combo, onSelectItem, itemId, onLogout }) => (
                 <select
                   className="mb-5 form-control"
                   value={itemId === null ? '!_nothing' : itemId._id}
-                  onChange={e => onSelectItem(e.currentTarget.value[0] === '!' ? null : e.currentTarget.value)}>
+                  onChange={e => {
+                    onSelectItem(e.currentTarget.value[0] === '!' ? null : e.currentTarget.value)
+                    if (e.currentTarget.value === '!_new') onNewItem()
+                  }}>
                   <option value="!_nothing">What would you like to learn?</option>
                   {combo.map(op => (
                     <option key={op._id} value={op._id}>
@@ -130,8 +133,8 @@ class HeaderScreen extends Component {
   state = {}
 
   render() {
-    const { onSelectItem, itemId, combo } = this.props
-    return <TemplateHeader combo={combo} onSelectItem={onSelectItem} itemId={itemId} />
+    const { onSelectItem, itemId, combo, onNewItem } = this.props
+    return <TemplateHeader combo={combo} onSelectItem={onSelectItem} onNewItem={onNewItem} itemId={itemId} />
   }
 }
 

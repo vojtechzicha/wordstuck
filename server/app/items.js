@@ -49,4 +49,21 @@ app.put('/:itemId', checkJwt, async (req, res, next) => {
   }
 })
 
+app.put('/', checkJwt, async (req, res, next) => {
+  try {
+    const user = req.user.sub
+    const db = req.app.locals.db
+
+    const mres = await db.collection('items').insertOne({
+      user,
+      data: '',
+      title: 'A new list :)'
+    })
+    console.log(mres)
+    res.json({ ok: mres.result.ok === 1, id: mres.insertedId })
+  } catch (e) {
+    next(e)
+  }
+})
+
 export default app

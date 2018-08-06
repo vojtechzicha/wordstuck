@@ -12,7 +12,7 @@ class EditorScreen extends Component {
       this.setState({
         title: this.props.item.title,
         data: this.props.item.data,
-        show: false
+        show: this.props.item.title === 'A new list :)'
       })
     }
   }
@@ -28,7 +28,7 @@ class EditorScreen extends Component {
       this.setState({
         title: nextProps.item.title,
         data: nextProps.item.data,
-        show: false
+        show: nextProps.item.title === 'A new list :)'
       })
     }
   }
