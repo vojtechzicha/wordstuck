@@ -149,7 +149,8 @@ const ShowScreen = ({ state, input, onChange, onSubmit }) => (
 class TeachScreen extends Component {
   state = {
     algorithmState: prepareInitialState(data),
-    input: ''
+    input: '',
+    combo: null
   }
 
   progress = input => {

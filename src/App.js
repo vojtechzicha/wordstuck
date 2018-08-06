@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Router, Route, withRouter } from 'react-router-dom'
 
 import TeachScreen from './components/teach/TeachScreen'
+import HeaderScreen from './components/HeaderScreen'
+
 import Login from './components/Login'
 import Auth from './Auth'
 import history from './history'
@@ -76,42 +78,9 @@ const TemplateNavigation = ({ onLogout }) => (
   </nav>
 )
 
-const TemplateHeader = () => (
-  <header className="masthead">
-    <div className="container h-100">
-      <div className="row h-100">
-        <div className="col-lg-7 my-auto">
-          <div className="header-content mx-auto">
-            <h1 className="mb-5">WordStuck will teach you the vocabulary you need!</h1>
-            <h2 className="mb-5">Just select the class:</h2>
-            <select className="mb-5 form-control">
-              <option>Japanese - Basic Numbers</option>
-            </select>
-            <a href="#download" className="btn btn-outline btn-xl js-scroll-trigger">
-              Teach me!
-            </a>
-          </div>
-        </div>
-        <div className="col-lg-5 my-auto">
-          <div className="device-container">
-            <div className="device-mockup iphone_se portrait white">
-              <div className="device">
-                <div className="screen">
-                  <img src="img/japanese-basic-numbers.jpg" className="img-fluid" alt="" />
-                </div>
-                <div className="button" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-)
-
 class App extends Component {
-  fetch = (component, action, options = {}, headers = {}) => {
-    return fetch(`${process.env.REACT_APP_SERVER_URI}api/${component}/v1/${action}`, {
+  fetch = (action, options = {}, headers = {}) => {
+    return fetch(`${process.env.REACT_APP_SERVER_URI}api/v1/${action}`, {
       ...options,
       headers: new Headers({
         ...headers,
@@ -125,7 +94,7 @@ class App extends Component {
       <Router history={history}>
         <ScrollToTop>
           <TemplateNavigation onLogout={() => auth.logout()} />
-          <TemplateHeader />
+          <HeaderScreen fetch={this.fetch} />
           <Route
             exact
             path="/"
