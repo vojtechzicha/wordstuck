@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { data, prepareInitialState, reduceNextState, prepareCorrectedInitialState } from './algorithm'
+import { prepareInitialState, reduceNextState, prepareCorrectedInitialState } from './algorithm'
 
 const show = option => option.join(', ')
 
@@ -147,9 +147,28 @@ const ShowScreen = ({ state, input, onChange, onSubmit }) => (
 
 class TeachScreen extends Component {
   state = {
-    algorithmState: prepareInitialState(data),
-    input: '',
-    combo: null
+    algorithmState: null,
+    input: ''
+  }
+
+  componentDidMount = () => {
+    if (this.props.item !== null) {
+      this.setState({
+        algorithmState: prepareInitialState(this.props.item.data)
+      })
+    }
+  }
+
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.item === null) {
+      this.setState({
+        algorithmState: null
+      })
+    } else if (nextProps.item._id !== this.props.item._id) {
+      this.setState({
+        algorithmState: prepareInitialState(nextProps.item.data)
+      })
+    }
   }
 
   progress = input => {
@@ -161,6 +180,22 @@ class TeachScreen extends Component {
 
   render() {
     const { algorithmState: state, input } = this.state
+    const { item } = this.props
+
+    if (state === null || item === null) {
+      return (
+        <div className="progress" style={{ marginBottom: '10px' }}>
+          <div
+            className="progress-bar progress-bar-striped bg-warning"
+            role="progressbar"
+            style={{ width: '100%' }}
+            aria-valuenow="100"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          />
+        </div>
+      )
+    }
 
     if (state.show === null) {
       if (state.results) {
@@ -170,11 +205,11 @@ class TeachScreen extends Component {
             title=""
             onClick={null}
             onClickCorrect={() => this.setState({ algorithmState: reduceNextState(prepareCorrectedInitialState(state), null), input: '' })}
-            onClickAll={() => this.setState({ algorithmState: prepareInitialState(data), input: '' })}
+            onClickAll={() => this.setState({ algorithmState: prepareInitialState(item.data), input: '' })}
           />
         )
       } else {
-        return <StartScreen state={state} title="Japanese - Basic Numbers" onClick={() => this.progress(null)} />
+        return <StartScreen state={state} title={item.title} onClick={() => this.progress(null)} />
       }
     } else {
       return (

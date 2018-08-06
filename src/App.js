@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Router, Route, withRouter } from 'react-router-dom'
 
 import TeachScreen from './components/teach/TeachScreen'
@@ -79,6 +79,10 @@ const TemplateNavigation = ({ onLogout }) => (
 )
 
 class App extends Component {
+  state = {
+    item: null
+  }
+
   fetch = (action, options = {}, headers = {}) => {
     return fetch(`${process.env.REACT_APP_SERVER_URI}api/v1/${action}`, {
       ...options,
@@ -89,16 +93,33 @@ class App extends Component {
     })
   }
 
+  handleSelectItem = async itemId => {
+    if (itemId === null) {
+      this.setState({ item: null })
+      return
+    }
+
+    this.setState({
+      item: await this.fetch(`items/${itemId}`).then(res => res.json())
+    })
+  }
+
   render() {
-    return (
+    const { item } = this.state
+
+    return auth.isAuthenticated() ? (
       <Router history={history}>
         <ScrollToTop>
-          <TemplateNavigation onLogout={() => auth.logout()} />
-          <HeaderScreen fetch={this.fetch} />
           <Route
             exact
             path="/"
-            render={props => (auth.isAuthenticated() ? <TeachScreen {...props} fetch={this.fetch} auth={auth} /> : <Login auth={auth} />)}
+            render={props => (
+              <Fragment>
+                <TemplateNavigation onLogout={() => auth.logout()} />
+                <HeaderScreen fetch={this.fetch} onSelectItem={this.handleSelectItem} itemId={item} />
+                {item !== null && <TeachScreen fetch={this.fetch} auth={auth} item={item} />}
+              </Fragment>
+            )}
           />
           <Route
             exact
@@ -110,6 +131,8 @@ class App extends Component {
           />
         </ScrollToTop>
       </Router>
+    ) : (
+      <Login auth={auth} />
     )
   }
 }

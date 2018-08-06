@@ -28,7 +28,7 @@ app.get('/:itemId', checkJwt, async (req, res, next) => {
     const id = req.params.itemId
     const db = req.app.locals.db
 
-    res.json((await db.collection('items').findOne({ user, _id: ObjectID(id) }, { _id: 0, data: 1 })).data)
+    res.json(await db.collection('items').findOne({ user, _id: ObjectID(id) }))
   } catch (e) {
     next(e)
   }

@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
-const TemplateHeader = ({ combo }) => (
+const TemplateHeader = ({ combo, onSelectItem, itemId }) => (
   <header className="masthead">
     <div className="container h-100">
       <div className="row h-100">
@@ -20,14 +20,25 @@ const TemplateHeader = ({ combo }) => (
                 />
               </div>
             ) : (
-              <select className="mb-5 form-control">
-                {combo.map(op => <option key={op._id}>{op.title}</option>)}
-                <option>Add new...</option>
+              <select
+                className="mb-5 form-control"
+                onChange={e => onSelectItem(e.currentTarget.value[0] === '!' ? null : e.currentTarget.value)}>
+                <option value="!_nothing">What would you like to learn?</option>
+                {combo.map(op => (
+                  <option key={op._id} value={op._id}>
+                    {op.title}
+                  </option>
+                ))}
+                <option value="!_new">Add new...</option>
               </select>
             )}
-            <a href="#download" className="btn btn-outline btn-xl js-scroll-trigger">
-              Teach me!
-            </a>
+            {itemId !== null && (
+              <Fragment>
+                <a href="#download" className="btn btn-outline btn-xl js-scroll-trigger">
+                  Teach me!
+                </a>
+              </Fragment>
+            )}
           </div>
         </div>
         <div className="col-lg-5 my-auto">
@@ -59,7 +70,8 @@ class HeaderScreen extends Component {
 
   render() {
     const { combo } = this.state
-    return <TemplateHeader combo={combo} />
+    const { onSelectItem, itemId } = this.props
+    return <TemplateHeader combo={combo} onSelectItem={onSelectItem} itemId={itemId} />
   }
 }
 
