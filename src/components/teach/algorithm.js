@@ -84,7 +84,7 @@ const pick = (state, answer) => {
   }
 
   console.log(state)
-  throw 'invalid state for transition'
+  throw new Error('invalid state for transition')
 }
 
 const reduceNextState = (state, input = null) => {

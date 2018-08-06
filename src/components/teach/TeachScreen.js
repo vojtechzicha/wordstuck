@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import moment from 'moment'
 import { data, prepareInitialState, reduceNextState, prepareCorrectedInitialState } from './algorithm'
 
 const show = option => option.join(', ')
