@@ -51,6 +51,20 @@ class EditorScreen extends Component {
     this.props.invalidate()
   }
 
+  handleRemove = async () => {
+    await this.props.fetch(
+      `items/${this.props.item._id}`,
+      {
+        method: 'DELETE'
+      },
+      {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    )
+    this.props.invalidate()
+  }
+
   render() {
     const { item } = this.props
     const { title, data, show } = this.state
@@ -72,11 +86,20 @@ class EditorScreen extends Component {
                 Start editing
               </button>
             ) : (
-              <button
-                className="btn btn-outline btn-lg btn-primary"
-                onClick={() => this.handleSave(document.getElementsByClassName('gatherTitle')[0].innerText, data)}>
-                Save
-              </button>
+              <div className="row">
+                <div className="col-md-6">
+                  <button
+                    className="btn btn-outline btn-lg btn-primary"
+                    onClick={() => this.handleSave(document.getElementsByClassName('gatherTitle')[0].innerText, data)}>
+                    Save
+                  </button>
+                </div>
+                <div className="col-md-6">
+                  <button className="btn btn-danger" onClick={() => this.handleRemove()}>
+                    Remove
+                  </button>
+                </div>
+              </div>
             )}
           </div>
           {show ? (

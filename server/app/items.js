@@ -49,6 +49,19 @@ app.put('/:itemId', checkJwt, async (req, res, next) => {
   }
 })
 
+app.delete('/:itemId', checkJwt, async (req, res, next) => {
+  try {
+    const user = req.user.sub
+    const id = req.params.itemId
+    const db = req.app.locals.db
+
+    await db.collection('items').deleteOne({ user, _id: ObjectID(id) })
+    res.json({ ok: true })
+  } catch (e) {
+    next(e)
+  }
+})
+
 app.put('/', checkJwt, async (req, res, next) => {
   try {
     const user = req.user.sub
