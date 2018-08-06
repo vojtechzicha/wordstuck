@@ -3,6 +3,7 @@ import { Router, Route, withRouter } from 'react-router-dom'
 
 import TeachScreen from './components/teach/TeachScreen'
 import HeaderScreen from './components/HeaderScreen'
+import EditorScreen from './components/EditorScreen'
 
 import Login from './components/Login'
 import Auth from './Auth'
@@ -32,55 +33,20 @@ const ScrollToTop = withRouter(
   }
 )
 
-const TemplateNavigation = ({ onLogout }) => (
-  <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div className="container">
-      <a className="navbar-brand js-scroll-trigger" href="#page-top">
-        Word Stuck
-      </a>
-      <button
-        className="navbar-toggler navbar-toggler-right"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarResponsive"
-        aria-controls="navbarResponsive"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        Menu
-        <i className="fa fa-bars" />
-      </button>
-      <div className="collapse navbar-collapse" id="navbarResponsive">
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <a className="nav-link js-scroll-trigger" href="#page-top">
-              Select Class
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link js-scroll-trigger" href="#download">
-              Learn
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className="nav-link"
-              href="#page-top"
-              onClick={e => {
-                onLogout(e)
-                e.preventDefault()
-              }}>
-              Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-)
-
 class App extends Component {
   state = {
+    combo: null,
     item: null
+  }
+
+  componentDidMount = () => {
+    this.refreshCombo()
+  }
+
+  refreshCombo = async () => {
+    const res = await this.fetch('items').then(res => res.json())
+    this.setState({ combo: res, item: null })
+    window.location.hash = ''
   }
 
   fetch = (action, options = {}, headers = {}) => {
@@ -105,21 +71,31 @@ class App extends Component {
   }
 
   render() {
-    const { item } = this.state
+    const { item, combo } = this.state
 
-    return auth.isAuthenticated() ? (
+    return (
       <Router history={history}>
         <ScrollToTop>
           <Route
             exact
             path="/"
-            render={props => (
-              <Fragment>
-                <TemplateNavigation onLogout={() => auth.logout()} />
-                <HeaderScreen fetch={this.fetch} onSelectItem={this.handleSelectItem} itemId={item} />
-                {item !== null && <TeachScreen fetch={this.fetch} auth={auth} item={item} />}
-              </Fragment>
-            )}
+            render={props =>
+              auth.isAuthenticated() ? (
+                <Fragment>
+                  <HeaderScreen
+                    fetch={this.fetch}
+                    onSelectItem={this.handleSelectItem}
+                    itemId={item}
+                    combo={combo}
+                    onLogout={() => auth.logout()}
+                  />
+                  {item !== null && <TeachScreen fetch={this.fetch} auth={auth} item={item} />}
+                  {item !== null && <EditorScreen fetch={this.fetch} auth={auth} item={item} invalidate={this.refreshCombo} />}
+                </Fragment>
+              ) : (
+                <Login auth={auth} />
+              )
+            }
           />
           <Route
             exact
@@ -131,8 +107,6 @@ class App extends Component {
           />
         </ScrollToTop>
       </Router>
-    ) : (
-      <Login auth={auth} />
     )
   }
 }

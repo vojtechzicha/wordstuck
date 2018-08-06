@@ -34,4 +34,19 @@ app.get('/:itemId', checkJwt, async (req, res, next) => {
   }
 })
 
+app.put('/:itemId', checkJwt, async (req, res, next) => {
+  try {
+    const user = req.user.sub
+    const id = req.params.itemId
+    const db = req.app.locals.db
+
+    const mres = await db
+      .collection('items')
+      .updateOne({ user, _id: ObjectID(id) }, { $set: { title: req.body.title, data: req.body.data } })
+    res.json({ ok: mres.result.nModified === 1 })
+  } catch (e) {
+    next(e)
+  }
+})
+
 export default app
