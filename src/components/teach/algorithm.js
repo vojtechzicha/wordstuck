@@ -1,21 +1,7 @@
-const data = `
-rei,zero,nuru (choose one);0
-ichi;1
-ni;2
-san;3
-shi,yon (choose one);4
-go;5
-roku;6
-shichi,nana;7
-hachi;8
-kyuu,ku;9
-juu;10
-`
-
 const correctAfter = 2
 const fromErrorAfter = 3
 
-const prepareInitialState = (data, forward = true) => ({
+const prepareInitialState = (data, forward = false) => ({
   initial: data
     .trim()
     .split('\n')
@@ -23,9 +9,8 @@ const prepareInitialState = (data, forward = true) => ({
     .map(row =>
       row
         .trim()
-        .replace(/ *\([^)]*\) */g, '')
         .split(';')
-        .map(option => option.split(','))
+        .map(option => [...option.replace(/ *\([^)]*\) */g, '').split(','), option])
     )
     .map(row => (forward ? row : row.reverse()))
     .map(row => [...row, 0, -1]),
@@ -125,4 +110,4 @@ const prepareCorrectedInitialState = lastState => {
   }
 }
 
-export { data, reduceNextState, prepareInitialState, prepareCorrectedInitialState }
+export { reduceNextState, prepareInitialState, prepareCorrectedInitialState }

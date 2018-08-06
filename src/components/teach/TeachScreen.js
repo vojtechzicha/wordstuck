@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { prepareInitialState, reduceNextState, prepareCorrectedInitialState } from './algorithm'
 
-const show = option => option.join(', ')
+const show = option => option[option.length - 1]
 
 const StartScreen = ({ state, title, onClick }) => (
   <section className={`download bg-primary text-center`} id="download">
