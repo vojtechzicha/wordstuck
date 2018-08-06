@@ -7,7 +7,7 @@ import path from 'path'
 import { MongoClient } from 'mongodb'
 import fileUpload from 'express-fileupload'
 
-import assets from './app/assets'
+import items from './app/items'
 
 console.log('application started')
 
@@ -70,4 +70,4 @@ MongoClient.connect(
   }
 )
 
-app.use('/api/assets/v1/', assets)
+app.use('/api/v1/items', items)
