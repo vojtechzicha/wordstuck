@@ -9,5 +9,5 @@
       }
     ]
   ],
-  "plugins": ["inline-dotenv", "transform-object-rest-spread"]
+  "plugins": ["inline-dotenv"]
 }
