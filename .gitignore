@@ -2,13 +2,13 @@
 
 # dependencies
 /node_modules
-/server/node_modules
+/portal/node_modules
 
 # testing
 /coverage
 
 # production
-/build
+/portal/build
 
 # misc
 .DS_Store
@@ -18,8 +18,9 @@
 .env.production.local
 
 # server
-/server/.env
-/server/dist
+/.env
+/dist
+/access.log
 /server/access.log
 
 npm-debug.log*
