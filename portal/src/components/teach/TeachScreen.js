@@ -4,21 +4,22 @@ import { prepareInitialState, reduceNextState, prepareCorrectedInitialState } fr
 const show = option => option[option.length - 1]
 
 const StartScreen = ({ state, title, onClick }) => (
-  <section className={`download bg-primary text-center`} id="download">
-    <div className="container">
-      <div className="row">
-        <div className="col-md-6">
+  <section className={`download bg-primary text-center`} id='download'>
+    <div className='container'>
+      <div className='row'>
+        <div className='col-md-6'>
           <h1>
             You're about to learn <code>{title}</code>! Great!
           </h1>
-          <a onClick={onClick} className="btn btn-xl btn-outline">
+          <button onClick={onClick} className='btn btn-xl btn-outline'>
             Let's do it
-          </a>
+          </button>
         </div>
-        <div className="col-md-6">
+        <div className='col-md-6'>
           <div>
             <p style={{ fontSize: '12pt' }}>
-              There'll be <code>{state.initial.length}</code> words to learn.<br />
+              There'll be <code>{state.initial.length}</code> words to learn.
+              <br />
               Each block will consists of <code>3</code> words. <br />
               If you make mistake, you'll need to correct yourself at least <code>2</code> times to continue
             </p>
@@ -33,10 +34,10 @@ const StartScreen = ({ state, title, onClick }) => (
 )
 
 const EndScreen = ({ state, onClickCorrect, onClickAll }) => (
-  <section className={`download bg-primary text-center`} id="download">
-    <div className="container">
-      <div className="row">
-        <div className="col-md-6">
+  <section className={`download bg-primary text-center`} id='download'>
+    <div className='container'>
+      <div className='row'>
+        <div className='col-md-6'>
           <h1>
             Great work! All <code>{state.correct.length + state.corrected.length}</code> learned!
           </h1>
@@ -45,18 +46,18 @@ const EndScreen = ({ state, onClickCorrect, onClickAll }) => (
             you do better?
           </p>
         </div>
-        <div className="col-md-6">
+        <div className='col-md-6'>
           {state.corrected.length > 0 ? (
             <div>
-              <a onClick={onClickCorrect} className="btn btn-xl btn-outline">
+              <button onClick={onClickCorrect} className='btn btn-xl btn-outline'>
                 Again - only the errors
-              </a>
+              </button>
             </div>
           ) : null}
           <div>
-            <a onClick={onClickAll} className="btn btn-xl btn-outline">
+            <button onClick={onClickAll} className='btn btn-xl btn-outline'>
               Again - all words
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -67,10 +68,10 @@ const EndScreen = ({ state, onClickCorrect, onClickAll }) => (
 const ShowScreen = ({ state, input, onChange, onSubmit }) => (
   <section
     className={`download bg-${state.answer === null ? 'primary' : state.answer.correct ? 'correct' : 'incorrect'} text-center`}
-    id="download">
-    <div className="container">
-      <div className="form-row">
-        <div className="col-md-12">
+    id='download'>
+    <div className='container'>
+      <div className='form-row'>
+        <div className='col-md-12'>
           <div>
             {state.answer === null ? null : state.answer.correct ? (
               <h1>
@@ -85,34 +86,35 @@ const ShowScreen = ({ state, input, onChange, onSubmit }) => (
           </div>
         </div>
       </div>
-      <div className="form-row" style={{ marginTop: '15px' }}>
-        <div className="col-md-6">
+      <div className='form-row' style={{ marginTop: '15px' }}>
+        <div className='col-md-6'>
           <h3>
             What does <code>{show(state.show[0])}</code> mean?
           </h3>
         </div>
-        <div className="col-md-6">
+        <div className='col-md-6'>
           <form
             onSubmit={e => {
               onSubmit()
               e.preventDefault()
               return false
             }}>
-            <input type="text" className="form-control" onChange={onChange} value={input} style={{ fontWeight: 'bold' }} autoFocus={true} />
+            <input type='text' className='form-control' onChange={onChange} value={input} style={{ fontWeight: 'bold' }} autoFocus={true} />
             <br />
-            <button type="submit" className="btn btn-xl">
+            <button type='submit' className='btn btn-xl'>
               CHECK
             </button>
           </form>
         </div>
       </div>
-      <div className="form-row" style={{ marginTop: '15px' }}>
+      <div className='form-row' style={{ marginTop: '15px' }}>
         {state.answer !== null ? (
           <p>
             So far{' '}
             {state.correct.length > 0 || state.correct.length > 0 ? (
               <Fragment>
-                you've learned <code>{state.correct.length + state.corrected.length}</code> words{state.correct.length > 0 ? (
+                you've learned <code>{state.correct.length + state.corrected.length}</code> words
+                {state.correct.length > 0 ? (
                   <small>
                     {' '}
                     (and of which <code>{state.correct.length}</code> from the top of your head!)
@@ -127,7 +129,8 @@ const ShowScreen = ({ state, input, onChange, onSubmit }) => (
               </Fragment>
             ) : (
               <Fragment>you're off to rocky start</Fragment>
-            )}.
+            )}
+            .
             {state.initial.length > 0 ? (
               <Fragment>
                 {' '}
@@ -184,14 +187,14 @@ class TeachScreen extends Component {
 
     if (state === null || item === null) {
       return (
-        <div className="progress" style={{ marginBottom: '10px' }}>
+        <div className='progress' style={{ marginBottom: '10px' }}>
           <div
-            className="progress-bar progress-bar-striped bg-warning"
-            role="progressbar"
+            className='progress-bar progress-bar-striped bg-warning'
+            role='progressbar'
             style={{ width: '100%' }}
-            aria-valuenow="100"
-            aria-valuemin="0"
-            aria-valuemax="100"
+            aria-valuenow='100'
+            aria-valuemin='0'
+            aria-valuemax='100'
           />
         </div>
       )
@@ -202,7 +205,7 @@ class TeachScreen extends Component {
         return (
           <EndScreen
             state={state}
-            title=""
+            title=''
             onClick={null}
             onClickCorrect={() => this.setState({ algorithmState: reduceNextState(prepareCorrectedInitialState(state), null), input: '' })}
             onClickAll={() => this.setState({ algorithmState: prepareInitialState(item.data), input: '' })}

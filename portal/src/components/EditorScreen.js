@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 class EditorScreen extends Component {
   state = {
@@ -66,36 +66,35 @@ class EditorScreen extends Component {
   }
 
   render() {
-    const { item } = this.props
     const { title, data, show } = this.state
 
     return (
-      <section className="features" id="features">
-        <div className="container">
-          <div className="section-heading text-center">
+      <section className='features' id='features'>
+        <div className='container'>
+          <div className='section-heading text-center'>
             <h2>
               Let's edit{' '}
-              <code contentEditable={true} className="gatherTitle">
+              <code contentEditable={true} className='gatherTitle'>
                 {title}
               </code>
             </h2>
-            <p className="text-muted">You'll learn so many words! Smart!</p>
+            <p className='text-muted'>You'll learn so many words! Smart!</p>
             <hr />
             {!show ? (
-              <button className="btn btn-outline btn-lg btn-primary" onClick={() => this.setState({ show: true })}>
+              <button className='btn btn-outline btn-lg btn-primary' onClick={() => this.setState({ show: true })}>
                 Start editing
               </button>
             ) : (
-              <div className="row">
-                <div className="col-md-6">
+              <div className='row'>
+                <div className='col-md-6'>
                   <button
-                    className="btn btn-outline btn-lg btn-primary"
+                    className='btn btn-outline btn-lg btn-primary'
                     onClick={() => this.handleSave(document.getElementsByClassName('gatherTitle')[0].innerText, data)}>
                     Save
                   </button>
                 </div>
-                <div className="col-md-6">
-                  <button className="btn btn-danger" onClick={() => this.handleRemove()}>
+                <div className='col-md-6'>
+                  <button className='btn btn-danger' onClick={() => this.handleRemove()}>
                     Remove
                   </button>
                 </div>
@@ -103,7 +102,7 @@ class EditorScreen extends Component {
             )}
           </div>
           {show ? (
-            <div className="row">
+            <div className='row'>
               <textarea
                 style={{ width: '100%', height: '100%', fontFamily: 'Dank Mono,Consolas' }}
                 rows={20}
@@ -112,11 +111,11 @@ class EditorScreen extends Component {
               />
             </div>
           ) : (
-            <div className="row">
+            <div className='row'>
               <textarea
                 style={{ width: '100%', height: '100%', fontFamily: 'Dank Mono,Consolas' }}
                 rows={20}
-                defaultValue=""
+                defaultValue=''
                 disabled={true}
               />
             </div>
