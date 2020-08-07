@@ -5,8 +5,8 @@
   "repository": "https://github.com/vojtechzicha/wordstuck.git",
   "dependencies": {
     "auth0-js": "^9.13.4",
-    "bootstrap": "^4.5.0",
-    "express-fileupload": "^1.1.9",
+    "bootstrap": "^4.5.2",
+    "express-fileupload": "^1.1.10",
     "formik": "^2.1.5",
     "jquery": "^3.5.1",
     "moment": "^2.27.0",
@@ -18,7 +18,7 @@
     "react-scripts": "^3.4.1",
     "react-select": "^3.1.0",
     "uuid": "^8.3.0",
-    "yup": "^0.29.2"
+    "yup": "^0.29.3"
   },
   "scripts": {
     "start": "react-scripts start",
