@@ -15,17 +15,17 @@
     "express-jwt-authz": "^2.4.1",
     "jwks-rsa": "^1.9.0",
     "moment": "^2.27.0",
-    "mongodb": "^3.6.0",
+    "mongodb": "^3.6.1",
     "morgan": "^1.10.0",
-    "onedrive-api": "^0.3.1",
+    "onedrive-api": "^0.4.0",
     "streamifier": "^0.1.1",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.1",
+    "@babel/cli": "^7.11.5",
+    "@babel/core": "^7.11.5",
     "@babel/node": "^7.10.5",
-    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-env": "^7.11.5",
     "babel-plugin-inline-dotenv": "^1.6.0",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2"
