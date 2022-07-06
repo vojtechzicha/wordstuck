@@ -14,7 +14,7 @@
     "express-jwt": "^6.0.0",
     "express-jwt-authz": "^2.4.1",
     "jwks-rsa": "^2.0.2",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "mongodb": "^3.6.6",
     "morgan": "^1.10.0",
     "onedrive-api": "^1.0.1",
